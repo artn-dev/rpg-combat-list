@@ -13,6 +13,7 @@ interface CombatContextProps {
     getCombatantId: () => string
     deleteCombatantById: (arg: string) => void
     addCombatant: (arg0: string, arg1: number) => void
+    clearCombatants: () => void
 }
 
 interface CombatProviderProps {
@@ -49,6 +50,10 @@ export const CombatProvider = ({ children }: CombatProviderProps) => {
         setCombatantList(newList)
     }
 
+    function clearCombatants() {
+        setCombatantList([])
+    }
+
     return (
         <CombatContext.Provider
             value={{
@@ -57,6 +62,7 @@ export const CombatProvider = ({ children }: CombatProviderProps) => {
                 getCombatantId,
                 deleteCombatantById,
                 addCombatant,
+                clearCombatants
             }}
         >
             {children}
