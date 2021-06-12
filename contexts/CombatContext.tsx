@@ -12,6 +12,7 @@ interface CombatContextProps {
     setCombatantList: (arg: Combatant[]) => void
     getCombatantId: () => string
     deleteCombatantById: (arg: string) => void
+    addCombatant: (arg0: string, arg1: number) => void
 }
 
 interface CombatProviderProps {
@@ -42,13 +43,20 @@ export const CombatProvider = ({ children }: CombatProviderProps) => {
         setCombatantList(newList)
     }
 
+    function addCombatant(name: string, initiative: number) {
+        let newList = combatantList.slice()
+        newList.push({name: name, initiative: initiative, id: getCombatantId()})
+        setCombatantList(newList)
+    }
+
     return (
         <CombatContext.Provider
             value={{
                 combatantList,
                 setCombatantList,
                 getCombatantId,
-                deleteCombatantById
+                deleteCombatantById,
+                addCombatant,
             }}
         >
             {children}
