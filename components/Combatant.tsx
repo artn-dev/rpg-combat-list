@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { CombatContext, Combatant } from '../contexts/CombatContext'
 import {
     ListItem,
     ListItemAvatar,
@@ -10,17 +12,23 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete'
 
 
-interface CombatantNodeProps {
-    name: string
-    initiative: number
-    key: any
-}
+const CombatantNode = ({ name, initiative, id }: Combatant) => {
+    const { combatantList, setCombatantList } = useContext(CombatContext)
 
+    function selfDelete() {
+        const selfIndex = combatantList.findIndex(
+            (combatant: Combatant) => (combatant.id == id)
+        )
 
-const CombatantNode = ({ name, initiative, key }: CombatantNodeProps) => {
+        let newList = combatantList.slice()
+        newList.splice(selfIndex, 1)
+
+        setCombatantList(newList)
+    }
+
     return (
         <>
-            <ListItem divider={true} key={key}>
+            <ListItem divider={true} key={id}>
 
                 <ListItemAvatar>
                     <Avatar>
@@ -36,8 +44,12 @@ const CombatantNode = ({ name, initiative, key }: CombatantNodeProps) => {
                 />
 
                 <ListItemSecondaryAction>
-                    <IconButton edge="end" aria-label="delete">
-                    <DeleteIcon />
+                    <IconButton
+                        edge="end"
+                        aria-label="delete"
+                        onClick={selfDelete}
+                    >
+                        <DeleteIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
 
