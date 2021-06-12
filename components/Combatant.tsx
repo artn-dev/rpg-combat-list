@@ -13,18 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete'
 
 
 const CombatantNode = ({ name, initiative, id }: Combatant) => {
-    const { combatantList, setCombatantList } = useContext(CombatContext)
+    const { deleteCombatantById } = useContext(CombatContext)
 
-    function selfDelete() {
-        const selfIndex = combatantList.findIndex(
-            (combatant: Combatant) => (combatant.id == id)
-        )
-
-        let newList = combatantList.slice()
-        newList.splice(selfIndex, 1)
-
-        setCombatantList(newList)
-    }
+    const selfDelete = () => deleteCombatantById(id)
 
     return (
         <>
