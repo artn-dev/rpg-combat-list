@@ -47,6 +47,13 @@ export const CombatProvider = ({ children }: CombatProviderProps) => {
     function addCombatant(name: string, initiative: number) {
         let newList = combatantList.slice()
         newList.push({name: name, initiative: initiative, id: getCombatantId()})
+
+        newList.sort(
+            (combatant0: Combatant, combatant1: Combatant) => (
+                combatant1.initiative - combatant0.initiative
+            )
+        )
+
         setCombatantList(newList)
     }
 
