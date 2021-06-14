@@ -8,6 +8,7 @@ import {
     Avatar,
     IconButton,
     Typography,
+    Tooltip
 } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete'
 
@@ -35,13 +36,15 @@ const CombatantNode = ({ name, initiative, id }: Combatant) => {
                 />
 
                 <ListItemSecondaryAction>
-                    <IconButton
-                        edge="end"
-                        aria-label="delete"
-                        onClick={selfDelete}
-                    >
-                        <DeleteIcon />
-                    </IconButton>
+                    <Tooltip title="Delete">
+                        <IconButton
+                            edge="end"
+                            aria-label="delete"
+                            onClick={selfDelete}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    </Tooltip>
                 </ListItemSecondaryAction>
 
             </ListItem>
