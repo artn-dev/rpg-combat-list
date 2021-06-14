@@ -35,8 +35,10 @@ const CombatantInput = () => {
     const classes = useStyles()
 
     function initiativeIsInvalid(value?: string) {
-        if (!value)
-            return document.getElementById("init-input-field").value == ""
+        if (!value) {
+            let initInputField = document.getElementById("init-input-field") as HTMLInputElement
+            return initInputField.value == ""
+        }
 
         return value == ""
     }
@@ -74,8 +76,11 @@ const CombatantInput = () => {
 
         addCombatant(name, parseInt(initiative, 10))
 
-        document.getElementById("name-input-field").value = ""
-        document.getElementById("init-input-field").value = ""
+        let nameInputField = document.getElementById("name-input-field") as HTMLInputElement
+        nameInputField.value = ""
+
+        let initInputField = document.getElementById("init-input-field") as HTMLInputElement
+        initInputField.value = ""
 
         setName("")
         setInitiative("0")

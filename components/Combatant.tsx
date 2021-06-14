@@ -20,7 +20,7 @@ const CombatantNode = ({ name, initiative, id }: Combatant) => {
 
     return (
         <>
-            <ListItem divider={true} key={id}>
+            <ListItem divider={true}>
 
                 <ListItemAvatar>
                     <Avatar>
