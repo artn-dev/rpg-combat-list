@@ -2,6 +2,7 @@ import CombatantInput from '../components/CombatantInput'
 import CombatList from '../components/CombatList'
 import {
   Container,
+  Grid,
   Theme,
   Card,
   CardContent
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     card: {
-      minWidth: 500,
       minHeight: 200,
     }
   }),
@@ -41,18 +41,26 @@ export default function Home() {
 
   return (
     <>
-      <Container className={classes.root}>
-        <div className={classes.row}>
+      <Container maxWidth={false} className={classes.root}>
+        <Grid container spacing={3}>
 
-          <Card variant="outlined" className={classes.card}>
-              <CardContent className={classes.form}>
-                <CombatantInput />
-              </CardContent>
-          </Card>
+          <Grid item xs={12} md={6}>
 
-          <CombatList />
+            <Card variant="outlined" className={classes.card}>
+                <CardContent className={classes.form}>
+                  <CombatantInput />
+                </CardContent>
+            </Card>
 
-        </div>
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+
+            <CombatList />
+
+          </Grid>
+
+        </Grid>
       </Container>
     </>
   )
