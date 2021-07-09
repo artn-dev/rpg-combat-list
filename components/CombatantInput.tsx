@@ -3,6 +3,7 @@ import {
     TextField,
     Button,
     Theme,
+    Grid
 } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { CombatContext } from '../contexts/CombatContext'
@@ -87,9 +88,8 @@ const CombatantInput = () => {
     }
 
     return (
-        <>
-            <form noValidate autoComplete="off">
-
+        <Grid container direction="column" spacing={3} alignContent="center" component="form">
+            <Grid item>
                 <TextField
                     id="name-input-field"
                     label="Name"
@@ -97,9 +97,8 @@ const CombatantInput = () => {
                     helperText={nameText}
                     onChange={updateName}
                 />
-
-                <br />
-
+            </Grid>
+            <Grid item>
                 <TextField
                     id="init-input-field"
                     label="Initiative"
@@ -109,7 +108,8 @@ const CombatantInput = () => {
                     helperText={initErrorText}
                     onChange={updateInitiative}
                 />
-
+            </Grid>
+            <Grid item>
                 <div className={classes.control}>
                     <Button
                         variant="contained"
@@ -119,9 +119,8 @@ const CombatantInput = () => {
                         Add
                     </Button>
                 </div>
-
-            </form>
-        </>
+            </Grid>
+        </Grid>
     )
 }
 
