@@ -70,7 +70,7 @@ const TabPanel = (props: TabPanelProps) => {
       >
         { value === index && (
           <Box p={3}>
-            <Typography>{children}</Typography>
+            <Typography component="div">{children}</Typography>
           </Box>
         ) }
       </div>
@@ -96,8 +96,8 @@ const Home = () => {
         variant="fullWidth"
         className={classes.tabs}
       >
-        <Tab icon={<MenuIcon />} className={classes.tab} id="vertical-tab-0" aria-controles="vertical-tabpanel-0" />
-        <Tab icon={<AddIcon />} className={classes.tab}  id="vertical-tab-1" aria-controles="vertical-tabpanel-1" />
+        <Tab icon={<MenuIcon />} className={classes.tab} id="vertical-tab-0" aria-controls="vertical-tabpanel-0" />
+        <Tab icon={<AddIcon />} className={classes.tab}  id="vertical-tab-1" aria-controls="vertical-tabpanel-1" />
       </Tabs>
 
       <Container maxWidth="sm" className={classes.root}>
