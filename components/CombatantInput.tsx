@@ -1,10 +1,5 @@
 import { ChangeEvent, useState, useContext } from 'react'
-import {
-    TextField,
-    Button,
-    Theme,
-    Grid
-} from '@material-ui/core'
+import { TextField, Button, Theme, Grid } from '@material-ui/core'
 import { createStyles, makeStyles } from '@material-ui/core/styles'
 import { CombatContext } from '../contexts/CombatContext'
 
@@ -24,77 +19,59 @@ const useStyles = makeStyles((theme: Theme) =>
     })
 )
 
-const CombatantInput = () => {
-    const [initError, setInitError] = useState(false)
-    const [initErrorText, setInitErrorText] = useState("")
-    const [nameText, setNameText] = useState("")
-    const [initiative, setInitiative] = useState("0")
-    const [name, setName] = useState("")
 
+const CombatantInput = () => {
     const { addCombatant } = useContext(CombatContext)
 
     const classes = useStyles()
 
-    function initiativeIsInvalid(value?: string) {
-        if (!value) {
-            let initInputField = document.getElementById("init-input-field") as HTMLInputElement
-            return initInputField.value == ""
-        }
+    const [initError, setInitError] = useState(false)
+    const [initErrorText, setInitErrorText] = useState("")
+    const [nameHelperText, setNameHelperText] = useState("")
+    const [initiative, setInitiative] = useState("")
+    const [name, setName] = useState("")
 
-        return value == ""
-    }
-
-    function toggleInitiativeError(error: boolean) {
-        const helperText = error ? "Initiative must be a number" : ""
-
+    const toggleInitiativeError = (error: boolean) => {
+        const helperText = error ? "Initiative must not be empty" : ""
         setInitError(error)
         setInitErrorText(helperText)
     }
 
-    function updateInitiative(event: ChangeEvent<HTMLInputElement>) {
-        const valueIsInvalid = initiativeIsInvalid(event.target.value)
-        toggleInitiativeError(valueIsInvalid)
-
-        if (!valueIsInvalid)
-            setInitiative(event.target.value)
+    const updateInitiative = (event: ChangeEvent<HTMLInputElement>) => {
+        setInitiative(event.target.value)
+        const initIsValid = /^\d+$/.test(event.target.value)
+        toggleInitiativeError(!initIsValid)
     }
 
-    function updateName(event: ChangeEvent<HTMLInputElement>) {
+    const updateName = (event: ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value)
-        setNameText("")
+        setNameHelperText("")
     }
 
-    function addInputCombatant() {
-        if (initiativeIsInvalid()) {
-            toggleInitiativeError(true)
+    const addInputCombatant = () => {
+        if (initError)
             return
-        }
 
         if (name == "") {
-            setNameText("Name is required")
+            setNameHelperText("Name is required")
             return
         }
 
         addCombatant(name, parseInt(initiative, 10))
 
-        let nameInputField = document.getElementById("name-input-field") as HTMLInputElement
-        nameInputField.value = ""
-
-        let initInputField = document.getElementById("init-input-field") as HTMLInputElement
-        initInputField.value = ""
-
         setName("")
-        setInitiative("0")
+        setInitiative("")
     }
 
     return (
-        <Grid container direction="column" spacing={3} alignContent="center" component="form">
+        <Grid container direction="column" spacing={5} alignContent="center" component="form">
             <Grid item>
                 <TextField
                     id="name-input-field"
                     label="Name"
                     color="primary"
-                    helperText={nameText}
+                    helperText={nameHelperText}
+                    value={name}
                     onChange={updateName}
                 />
             </Grid>
@@ -106,6 +83,7 @@ const CombatantInput = () => {
                     color="primary"
                     error={initError}
                     helperText={initErrorText}
+                    value={initiative}
                     onChange={updateInitiative}
                 />
             </Grid>
