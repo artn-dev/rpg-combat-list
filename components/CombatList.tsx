@@ -37,12 +37,21 @@ const CombatList = () => {
           <Typography variant="h3" align="center" className={classes.title}>
             Combat List
           </Typography>
-          <Tooltip title="Clear">
-            <IconButton aria-label="clear" edge="end" onClick={clearCombatants}>
-              <HighlightOffIcon fontSize="large" />
-            </IconButton>
-          </Tooltip>
+
+          { combatantList.length > 0 && (
+              <Tooltip title="Clear">
+                <IconButton aria-label="clear" edge="end" onClick={clearCombatants}>
+                  <HighlightOffIcon fontSize="large" />
+                </IconButton>
+              </Tooltip>
+          )}
         </div>
+
+        { combatantList.length == 0 && (
+          <Typography variant="h6" color="textSecondary" align="center">
+            The list is currently empty
+          </Typography>
+        )}
 
         <div className={classes.demo}>
           <List dense={true}>
@@ -53,7 +62,7 @@ const CombatList = () => {
                     id={combatant.id}
                     key={combatant.id}
                   />
-            )) }
+            ))}
           </List>
         </div>
       </>
