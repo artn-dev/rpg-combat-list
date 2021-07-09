@@ -6,7 +6,8 @@ import {
   Tabs,
   Tab,
   Box,
-  Typography
+  Typography,
+  Tooltip
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import MenuIcon from '@material-ui/icons/Menu'
@@ -101,8 +102,12 @@ const Home = () => {
         variant="fullWidth"
         className={classes.tabs}
       >
-        <Tab icon={<MenuIcon />} className={classes.tab} {...tabprops(0)} />
-        <Tab icon={<AddIcon />}  className={classes.tab} {...tabprops(1)} />
+        <Tooltip title="See List" placement="right">
+          <Tab icon={<MenuIcon />} className={classes.tab} {...tabprops(0)} />
+        </Tooltip>
+        <Tooltip title="Add" placement="right">
+          <Tab icon={<AddIcon />}  className={classes.tab} {...tabprops(1)} />
+        </Tooltip>
       </Tabs>
 
       <Container maxWidth="sm" className={classes.root}>
