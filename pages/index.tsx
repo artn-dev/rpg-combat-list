@@ -44,7 +44,14 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-    }
+    },
+    scroller: {
+      display: "flex",
+    },
+    flexContainer: {
+      marginTop: "auto",
+      marginBottom: "auto",
+    },
   }),
 )
 
@@ -101,6 +108,10 @@ const Home = () => {
         textColor="primary"
         variant="fullWidth"
         className={classes.tabs}
+        classes={{
+          scroller: classes.scroller,
+          flexContainer: classes.flexContainer,
+        }}
       >
         <Tooltip title="See List" placement="right">
           <Tab icon={<MenuIcon />} className={classes.tab} {...tabprops(0)} />
