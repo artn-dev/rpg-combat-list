@@ -96,8 +96,8 @@ const Home = () => {
         value={openTab}
         onChange={changeTab}
         orientation="vertical"
-        indicatorColor="secondary"
-        textColor="secondary"
+        indicatorColor="primary"
+        textColor="primary"
         variant="fullWidth"
         className={classes.tabs}
       >
