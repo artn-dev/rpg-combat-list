@@ -2,66 +2,114 @@ import CombatantInput from '../components/CombatantInput'
 import CombatList from '../components/CombatList'
 import {
   Container,
-  Grid,
   Theme,
-  Card,
-  CardContent
+  Tabs,
+  Tab,
+  Box,
+  Typography
 } from '@material-ui/core'
+import AddIcon from '@material-ui/icons/Add'
+import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { useState, ReactNode, ChangeEvent } from 'react'
+
+
+const tabsWidth = 60
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    container: {
+      height: "100vh",
+      display: "flex",
+    },
     root: {
       flexGrow: 1,
       padding: "2rem",
-    },
-
-    row: {
       display: "flex",
-      gap: "5rem",
-      marginTop: "4rem",
+      flexDirection: "column",
+      justifyContent: "center",
     },
-
-    form: {
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
+    tabs: {
+      width: tabsWidth,
+      borderRight: `1px solid ${theme.palette.divider}`,
+      height: "100%",
+      boxShadow: theme.shadows[4],
     },
-
-    card: {
-      minHeight: 200,
+    tab: {
+      minWidth:tabsWidth,
+    },
+    tabPanel: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     }
   }),
 )
 
 
-export default function Home() {
+interface TabPanelProps {
+  children: ReactNode
+  index: any
+  value: any
+}
+
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, index, value, ...other } = props
   const classes = useStyles()
 
   return (
-    <>
-      <Container maxWidth={false} className={classes.root}>
-        <Grid container spacing={3}>
-
-          <Grid item xs={12} md={6}>
-
-            <Card variant="outlined" className={classes.card}>
-                <CardContent className={classes.form}>
-                  <CombatantInput />
-                </CardContent>
-            </Card>
-
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-
-            <CombatList />
-
-          </Grid>
-
-        </Grid>
-      </Container>
-    </>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`vertical-tabpanel-${index}`}
+      aria-labelledby={`vertical-tab-${index}`}
+      className={classes.tabPanel}
+      {...other}
+      >
+        { value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        ) }
+      </div>
   )
 }
+
+const Home = () => {
+  const classes = useStyles()
+  const [openTab, setOpenTab] = useState(0)
+
+  const changeTab = (event: ChangeEvent<HTMLInputElement>, newValue: number) => {
+    setOpenTab(newValue)
+  }
+
+  return (
+    <div className={classes.container}>
+      <Tabs
+        value={openTab}
+        onChange={changeTab}
+        orientation="vertical"
+        indicatorColor="secondary"
+        textColor="secondary"
+        variant="fullWidth"
+        className={classes.tabs}
+      >
+        <Tab icon={<MenuIcon />} className={classes.tab} id="vertical-tab-0" aria-controles="vertical-tabpanel-0" />
+        <Tab icon={<AddIcon />} className={classes.tab}  id="vertical-tab-1" aria-controles="vertical-tabpanel-1" />
+      </Tabs>
+
+      <Container maxWidth="sm" className={classes.root}>
+        <TabPanel value={openTab} index={0}>
+          <CombatList />
+        </TabPanel>
+        <TabPanel value={openTab} index={1}>
+          <CombatantInput />
+        </TabPanel>
+      </Container>
+    </div>
+  )
+}
+
+export default Home
