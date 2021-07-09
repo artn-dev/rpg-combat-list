@@ -77,6 +77,11 @@ const TabPanel = (props: TabPanelProps) => {
   )
 }
 
+const tabprops = (index: number) => ({
+  id: `vertical-tab${index}`,
+  "aria-controls": `vertical-tabpanel-${index}`
+})
+
 const Home = () => {
   const classes = useStyles()
   const [openTab, setOpenTab] = useState(0)
@@ -96,8 +101,8 @@ const Home = () => {
         variant="fullWidth"
         className={classes.tabs}
       >
-        <Tab icon={<MenuIcon />} className={classes.tab} id="vertical-tab-0" aria-controls="vertical-tabpanel-0" />
-        <Tab icon={<AddIcon />} className={classes.tab}  id="vertical-tab-1" aria-controls="vertical-tabpanel-1" />
+        <Tab icon={<MenuIcon />} className={classes.tab} {...tabprops(0)} />
+        <Tab icon={<AddIcon />}  className={classes.tab} {...tabprops(1)} />
       </Tabs>
 
       <Container maxWidth="sm" className={classes.root}>
