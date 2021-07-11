@@ -11,11 +11,13 @@ import {
 } from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
 import type {
   OnDragEndResponder,
   DroppableProvided,
-  DroppableStateSnapshot
+  DroppableStateSnapshot,
+  DraggableProvided,
+  DraggableStateSnapshot
 } from 'react-beautiful-dnd'
 
 
@@ -78,13 +80,23 @@ const CombatList = () => {
               {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
                 <RootRef rootRef={provided.innerRef}>
                   <List dense={true}>
-                    {combatantList.map((combatant) => (
-                      <CombatantNode
-                        name={combatant.name}
-                        initiative={combatant.initiative}
-                        id={combatant.id}
-                        key={combatant.id}
-                      />
+                    {combatantList.map((combatant, index) => (
+                      <Draggable key={combatant.id} draggableId={combatant.id} index={index}>
+                        {(provided: DraggableProvided, snapshot: DraggableStateSnapshot) =>(
+                          <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
+                          >
+                            <CombatantNode
+                              name={combatant.name}
+                              initiative={combatant.initiative}
+                              id={combatant.id}
+                              key={combatant.id}
+                            />
+                          </div>
+                        )}
+                      </Draggable>
                     ))}
                     {provided.placeholder}
                   </List>
