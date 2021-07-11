@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,33 +39,35 @@ const CombatList = () => {
             Combat List
           </Typography>
 
-          { combatantList.length > 0 && (
-              <Tooltip title="Clear">
-                <IconButton aria-label="clear" edge="end" onClick={clearCombatants}>
-                  <HighlightOffIcon fontSize="large" />
-                </IconButton>
-              </Tooltip>
+          {combatantList.length > 0 && (
+            <Tooltip title="Clear">
+              <IconButton aria-label="clear" edge="end" onClick={clearCombatants}>
+                <HighlightOffIcon fontSize="large" />
+              </IconButton>
+            </Tooltip>
           )}
         </div>
 
-        { combatantList.length == 0 && (
+        {combatantList.length == 0 && (
           <Typography variant="h6" color="textSecondary" align="center">
             The list is currently empty
           </Typography>
         )}
 
-        <div className={classes.demo}>
-          <List dense={true}>
-            { combatantList.map((combatant) => (
-                  <CombatantNode
-                    name={combatant.name}
-                    initiative={combatant.initiative}
-                    id={combatant.id}
-                    key={combatant.id}
-                  />
-            ))}
-          </List>
-        </div>
+        <DragDropContext>
+          <div className={classes.demo}>
+            <List dense={true}>
+              {combatantList.map((combatant) => (
+                <CombatantNode
+                  name={combatant.name}
+                  initiative={combatant.initiative}
+                  id={combatant.id}
+                  key={combatant.id}
+                />
+              ))}
+            </List>
+          </div>
+        </DragDropContext>
       </>
     )
 }
