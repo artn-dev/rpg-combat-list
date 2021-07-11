@@ -27,3 +27,5 @@ Para usar o projeto, é preciso instalá-lo com [npm](https://nodejs.org/en/down
 - [Next.js](https://nextjs.org/) - Framework da biblioteca React.js
 
 - [Material-ui](https://material-ui.com/) - Biblioteca para interfaces gráficas com grande diversidade de componentes
+
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) - Pacote npm para _*drag and drop*_ de lista em React.js
