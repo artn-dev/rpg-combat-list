@@ -2,16 +2,21 @@ import { useContext } from 'react'
 import { CombatContext } from '../contexts/CombatContext'
 import CombatantNode from './Combatant'
 import {
-    Tooltip,
-    Typography ,
-    List,
-    IconButton,
-    Theme
+  Tooltip,
+  Typography ,
+  List,
+  IconButton,
+  Theme,
+  RootRef
 } from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { DragDropContext } from 'react-beautiful-dnd'
-import type { OnDragEndResponder } from 'react-beautiful-dnd'
+import { DragDropContext, Droppable } from 'react-beautiful-dnd'
+import type {
+  OnDragEndResponder,
+  DroppableProvided,
+  DroppableStateSnapshot
+} from 'react-beautiful-dnd'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,16 +74,23 @@ const CombatList = () => {
 
         <DragDropContext onDragEnd={swapCombatants}>
           <div className={classes.demo}>
-            <List dense={true}>
-              {combatantList.map((combatant) => (
-                <CombatantNode
-                  name={combatant.name}
-                  initiative={combatant.initiative}
-                  id={combatant.id}
-                  key={combatant.id}
-                />
-              ))}
-            </List>
+            <Droppable droppableId="combat-list">
+              {(provided: DroppableProvided, snapshot: DroppableStateSnapshot) => (
+                <RootRef rootRef={provided.innerRef}>
+                  <List dense={true}>
+                    {combatantList.map((combatant) => (
+                      <CombatantNode
+                        name={combatant.name}
+                        initiative={combatant.initiative}
+                        id={combatant.id}
+                        key={combatant.id}
+                      />
+                    ))}
+                    {provided.placeholder}
+                  </List>
+                </RootRef>
+              )}
+            </Droppable>
           </div>
         </DragDropContext>
       </>
