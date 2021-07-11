@@ -11,6 +11,7 @@ import {
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { DragDropContext } from 'react-beautiful-dnd'
+import type { OnDragEndResponder } from 'react-beautiful-dnd'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -28,9 +29,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 const CombatList = () => {
-    const { combatantList, clearCombatants } = useContext(CombatContext)
+    const { combatantList, clearCombatants, setCombatantList } = useContext(CombatContext)
 
     const classes = useStyles()
+
+    const swapCombatants = (param: OnDragEndResponder) => {
+      if (!param.destination)
+        return
+
+      const srcindex = param.source.index
+      const dstindex = param.destination.index
+
+      let newList = combatantList.slice()
+      newList.splice(dstindex, 0, newList.splice(srcindex, 1)[0])
+      setCombatantList(newList)
+    }
 
     return (
       <>
@@ -54,7 +67,7 @@ const CombatList = () => {
           </Typography>
         )}
 
-        <DragDropContext>
+        <DragDropContext onDragEnd={swapCombatants}>
           <div className={classes.demo}>
             <List dense={true}>
               {combatantList.map((combatant) => (
