@@ -19,6 +19,7 @@ import type {
   DraggableProvided,
   DraggableStateSnapshot
 } from 'react-beautiful-dnd'
+import clsx from 'clsx'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,6 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+    },
+    dragged: {
+      boxShadow: theme.shadows[2],
     },
   }),
 )
@@ -87,6 +91,9 @@ const CombatList = () => {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
+                            className={clsx({
+                              [classes.dragged]: snapshot.isDragging,
+                            })}
                           >
                             <CombatantNode
                               name={combatant.name}
