@@ -11,9 +11,11 @@ import {
 } from '@material-ui/core'
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd'
-import type {
-  OnDragEndResponder,
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
   DroppableProvided,
   DroppableStateSnapshot,
   DraggableProvided,
@@ -44,7 +46,7 @@ const CombatList = () => {
 
     const classes = useStyles()
 
-    const swapCombatants = (param: OnDragEndResponder) => {
+    const swapCombatants = (param: DropResult) => {
       if (!param.destination)
         return
 
